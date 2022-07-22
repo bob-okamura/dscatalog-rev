@@ -21,10 +21,7 @@ public class CategoryController {
 	
 	@GetMapping
 	public ResponseEntity<List<Category>> findAll(){
-		List<Category> list = new ArrayList<>();
-		list.add(new Category(1L, "Books"));
-		list.add(new Category(2L, "Electronics"));
-		list.add(new Category(3L, "GAMES"));
+		List<Category> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
