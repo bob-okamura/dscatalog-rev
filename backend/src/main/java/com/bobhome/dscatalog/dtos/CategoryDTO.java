@@ -2,12 +2,16 @@ package com.bobhome.dscatalog.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.bobhome.dscatalog.entities.Category;
 
 public class CategoryDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotNull
 	private String name;
 	
 	public CategoryDTO() {

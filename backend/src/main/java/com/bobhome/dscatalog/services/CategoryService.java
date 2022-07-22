@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,8 +65,8 @@ public class CategoryService {
 		catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		}
-		catch(DataAccessException e) {
-			throw new DatabaseException("Database access exception");
+		catch(DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity Violation.");
 		}
 	}
 	
