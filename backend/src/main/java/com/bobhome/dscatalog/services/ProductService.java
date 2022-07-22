@@ -10,8 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bobhome.dscatalog.dtos.CategoryDTO;
 import com.bobhome.dscatalog.dtos.ProductDTO;
+import com.bobhome.dscatalog.entities.Category;
 import com.bobhome.dscatalog.entities.Product;
+import com.bobhome.dscatalog.repositories.CategoryRepository;
 import com.bobhome.dscatalog.repositories.ProductRepository;
 import com.bobhome.dscatalog.services.exceptions.ResourceNotFoundException;
 
@@ -20,6 +23,9 @@ public class ProductService {
 	
 	@Autowired
 	private ProductRepository repository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(Pageable pageable) {
@@ -70,6 +76,13 @@ public class ProductService {
 		entity.setPrice(dto.getPrice());
 		entity.setImgUrl(dto.getImgUrl());
 		entity.setMoment(dto.getMoment());
+		
+		entity.getCategories().clear();
+		for(CategoryDTO catDto : dto.getCategories()) {
+			Category category = categoryRepository.getReferenceById(catDto.getId());
+			entity.getCategories().add(category);
+		}
+		
 	}
 
 }
